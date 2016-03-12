@@ -381,7 +381,7 @@ public class Readability {
              * For every 100 characters in this paragraph, add another point. Up
              * to 3 points.
              */
-            contentScore += Math.min(Math.floor(innerText.length() / 100), 3);
+            contentScore += Math.min(Math.floor(innerText.length() / (double)100), 3);
 
             /* Add the score to the parent. The grandparent gets half. */
             incrementContentScore(parentNode, contentScore);
@@ -691,7 +691,7 @@ public class Readability {
                 } else if (li > p && !"ul".equalsIgnoreCase(tag)
                         && !"ol".equalsIgnoreCase(tag)) {
                     toRemove = true;
-                } else if (input > Math.floor(p / 3)) {
+                } else if (input > Math.floor(p / (double)3)) {
                     toRemove = true;
                 } else if (contentLength < 25 && (img == 0 || img > 2)) {
                     toRemove = true;
@@ -699,7 +699,7 @@ public class Readability {
                     toRemove = true;
                 } else if (weight > 25 && linkDensity > 0.5f) {
                     toRemove = true;
-                } else if ((embedCount == 1 && contentLength < 75)
+                } else if (embedCount == 1 && contentLength < 75
                         || embedCount > 1) {
                     toRemove = true;
                 }
@@ -745,8 +745,10 @@ public class Readability {
      * @param t
      */
     protected void dbg(String msg, Throwable t) {
-        System.out.println(msg + (t != null ? ("\n" + t.getMessage()) : "")
-                + (t != null ? ("\n" + t.getStackTrace()) : ""));
+        System.out.println(msg + (t != null ? ("\n" + t.getMessage()) : ""));
+        if (t != null) {
+        	t.getStackTrace();
+        }
     }
 
     private static class Patterns {
