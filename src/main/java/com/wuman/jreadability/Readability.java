@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,6 +20,8 @@ public class Readability {
 
     private final Document mDocument;
     private String mBodyCache;
+
+    private static final Logger LOG = Logger.getLogger(Readability.class);
 
     public Readability(String html) {
         super();
@@ -745,9 +749,10 @@ public class Readability {
      * @param t
      */
     protected void dbg(String msg, Throwable t) {
-        System.out.println(msg + (t != null ? ("\n" + t.getMessage()) : ""));
-        if (t != null) {
-        	t.getStackTrace();
+        if (t == null) {
+            LOG.debug(msg);
+        } else {
+            LOG.warn(msg, t);
         }
     }
 
